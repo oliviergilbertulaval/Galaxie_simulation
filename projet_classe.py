@@ -21,19 +21,23 @@ class MockImage():
                 self.amplitude[0] = (gal['amplitude'])
             g.append(Gaussian2D(self.amplitude[i], self.pos[i][0], self.pos[i][1], self.stdev[i][0], self.stdev[i][1], theta=self.angle[i] * np.pi / 180.0))
 
-        #Create the galaxy(ies)
         ny = nx = 1000
         y, x = np.mgrid[0:ny, 0:nx]
         noise = make_noise_image((ny, nx), distribution='gaussian', mean=noise_level, stddev=1.0, seed=None)
+        #On ajoute le bruit dans l'image
         self.data = noise
         for i in range(number_of_galaxies):
+            #On ajoute les galaxies à l'image
             self.data += g[i](x,y)
         pass
 
     def show(self):
+        #Affiche l'image à l'écran
         plt.imshow(self.data, cmap='gray')
         plt.show()
         pass
 
-image = MockImage(randomize=True, number_of_galaxies=10)
-image.show()
+if __name__ == '__main__':
+    #On créé une fake image avec 10 galaxies comme on la recevrait d'un télescope
+    image_avec_10_galaxies = MockImage(randomize=True, number_of_galaxies=10)
+    image_avec_10_galaxies.show()
