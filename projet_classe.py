@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from random import *
 
 class MockImage():
-    def __init__(self, gal={'pos':(400,500), 'angle':40, 'stdev':(20,12), 'amplitude':100}, randomize=False, number_of_galaxies=1, noise_level=5):
+    def __init__(self, gal={'pos':(400,500), 'angle':40, 'stdev':(55,32), 'amplitude':30}, randomize=False, number_of_galaxies=1, noise_level=5, noise_deviation=1.0):
         
         self.pos, self.angle, self.stdev, self.amplitude, g = [], [], [], [], []
         for i in range(number_of_galaxies):
@@ -23,7 +23,7 @@ class MockImage():
 
         ny = nx = 1000
         y, x = np.mgrid[0:ny, 0:nx]
-        noise = make_noise_image((ny, nx), distribution='gaussian', mean=noise_level, stddev=1.0, seed=None)
+        noise = make_noise_image((ny, nx), distribution='gaussian', mean=noise_level, stddev=noise_deviation, seed=None)
         #On ajoute le bruit dans l'image
         self.data = noise
         for i in range(number_of_galaxies):
@@ -33,7 +33,7 @@ class MockImage():
 
     def show(self):
         #Affiche l'image à l'écran
-        plt.imshow(self.data, cmap='gray')
+        plt.imshow(self.data, cmap='gray', origin='lower')
         plt.show()
         pass
 
