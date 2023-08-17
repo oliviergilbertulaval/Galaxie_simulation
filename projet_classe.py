@@ -55,7 +55,7 @@ class MockImage():
             g.append(Gaussian2D(self.amplitude[i], self.pos[i][0], self.pos[i][1], self.stdev[i][0], self.stdev[i][1], theta=self.angle[i] * np.pi / 180.0))
             ran_seed = random()
             
-            self.agn[i] = Gaussian2D(point_amp[i]*self.agn[i], self.pos[i][0], self.pos[i][1], 2, 2, theta=0)
+            self.agn[i] = Gaussian2D(point_amp[i]*self.agn[i], self.pos[i][0], self.pos[i][1], 0.1, 0.1, theta=0)
         ny = nx = 1000
         y, x = np.mgrid[0:ny, 0:nx]
         noise = make_noise_image((ny, nx), distribution='gaussian', mean=noise_level, stddev=noise_deviation, seed=None)
