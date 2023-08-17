@@ -24,7 +24,7 @@ class PSF():
 
 
 class MockImage():
-    def __init__(self, gal={'pos':(400,500), 'angle':40, 'stdev':(55,32), 'amplitude':30, 'agn':0}, star=False, agn_amp=None, psf = None, randomize=False, number_of_galaxies=1, add_noise=True, noise_level=5, noise_deviation=1.0):
+    def __init__(self, gal={'pos':(400,500), 'angle':40, 'stdev':(55,32), 'amplitude':30, 'agn':0}, star=False, if_agn='maybe', agn_amp=None, psf = None, randomize=False, number_of_galaxies=1, add_noise=True, noise_level=5, noise_deviation=1.0):
         '''
         gal: dictionnary; to personnalize the first galaxy created (randomize has to be False)
         psf: PSF object; point spread function used to convolve the components
@@ -40,12 +40,17 @@ class MockImage():
         for i in range(number_of_galaxies):
             self.pos.append((random()*900+50, random()*900+50))
             self.angle.append(360*random())
-            self.amplitude.append(100*random()+50)
+            self.amplitude.append(0.001*random()+0.0005)
             self.stdev.append((20*random()+5, 20*random()+5))
-            self.agn.append(1 if random()>0.5 else 0)
-            point_amp.append(random()*50+20)
-            
+            if if_agn == 'maybe':
+                self.agn.append(1 if random()>0.5 else 0)
+            elif if_agn == 'all':
+                self.agn.append(1)
+            else:
+                self.agn.append(0)
+            point_amp.append(random()*1+0.001)
             if randomize is False and i == 0:
+                print('randomize=False')
                 self.pos[0] = (gal['pos'])
                 self.angle[0] = (gal['angle'])
                 self.stdev[0] = (gal['stdev'])

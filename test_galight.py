@@ -8,24 +8,35 @@ from galight.fitting_specify import FittingSpecify
 from galight.fitting_process import FittingProcess
 
 psf = PSF('HST')
+if False:
+    image = MockImage(
+        randomize=False, 
+        number_of_galaxies=1, 
+        star=True, 
+        gal={'pos':(400,500), 'angle':40, 'stdev':(5,10), 'amplitude':0.003, 'agn':1}, 
+        agn_amp=0.005, 
+        psf=psf, 
+        add_noise=True, 
+        noise_level=0.0007, 
+        noise_deviation=0.003
+        )
+    image = MockImage(
+        randomize=False, 
+        number_of_galaxies=1, 
+        star=True, 
+        gal={'pos':(400,500), 'angle':70, 'stdev':(10,12), 'amplitude':0.001, 'agn':1}, 
+        agn_amp=0.1, 
+        psf=psf, 
+        add_noise=True, 
+        noise_level=0.0007, 
+        noise_deviation=0.003
+        )
 image = MockImage(
-    randomize=False, 
+    randomize=True, 
     number_of_galaxies=1, 
-    star=True, 
-    gal={'pos':(400,500), 'angle':40, 'stdev':(5,10), 'amplitude':0.003, 'agn':1}, 
-    agn_amp=0.005, 
+    star=True,
     psf=psf, 
-    add_noise=True, 
-    noise_level=0.0007, 
-    noise_deviation=0.003
-    )
-image = MockImage(
-    randomize=False, 
-    number_of_galaxies=1, 
-    star=True, 
-    gal={'pos':(400,500), 'angle':70, 'stdev':(10,12), 'amplitude':0.001, 'agn':1}, 
-    agn_amp=0.1, 
-    psf=psf, 
+    if_agn='all',
     add_noise=True, 
     noise_level=0.0007, 
     noise_deviation=0.003
@@ -62,7 +73,7 @@ exp_map = exp * wht/mean_wht  #Derive the exposure time map for each pixel
 
 
 #keywords see the notes above.
-data_process = DataProcess(fov_image = fov_image, target_pos = [400,500], pos_type = 'pixel', header = None,
+data_process = DataProcess(fov_image = fov_image, target_pos = image.pos[0], pos_type = 'pixel', header = None,
                           rm_bkglight = False, exptime = exp_map, if_plot=False, zp = 24.897)  #zp use 27.0 for convinence.
 
 data_process.generate_target_materials(radius=50, create_mask = False, nsigma=5,
