@@ -40,4 +40,4 @@ class MockImage():
 if __name__ == '__main__':
     #On créé une fake image avec 10 galaxies comme on la recevrait d'un télescope
     image_avec_10_galaxies = MockImage(randomize=True, number_of_galaxies=10)
-    image_avec_10_galaxies.show()
+    image_avec_10_galaxies.show()       
