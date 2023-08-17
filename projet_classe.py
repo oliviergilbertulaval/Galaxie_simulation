@@ -68,7 +68,7 @@ class MockImage():
             self.data += Gaussian2D(1, 800, 800, 0.1, 0.1, theta=0)(x,y)
         #Convolve with PSF:
         if psf is not None:
-            self.data = ndimage.convolve(self.data, psf.data/np.sum(psf.data), mode='reflect')
+            self.data = ndimage.convolve(self.data, psf.data, mode='reflect')
 
         #On ajoute le bruit dans l'image
         if add_noise:

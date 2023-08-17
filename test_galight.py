@@ -19,6 +19,17 @@ image = MockImage(
     noise_level=0.0007, 
     noise_deviation=0.003
     )
+image = MockImage(
+    randomize=False, 
+    number_of_galaxies=1, 
+    star=True, 
+    gal={'pos':(400,500), 'angle':70, 'stdev':(10,12), 'amplitude':0.001, 'agn':1}, 
+    agn_amp=0.1, 
+    psf=psf, 
+    add_noise=True, 
+    noise_level=0.0007, 
+    noise_deviation=0.003
+    )
 image.show()
 #fitsFile = pyfits.open(image)
 
