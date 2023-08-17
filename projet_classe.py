@@ -9,10 +9,16 @@ from skimage.restoration import richardson_lucy
 
 class PSF():
     def __init__(self, telescope='HST'):
+        self.telescope = telescope
         if telescope == 'HST':
             self.data = np.loadtxt(r'hubble_PSF.txt', dtype=int)
         else:
             raise ValueError("There is no PSF available for this telescope.")
+        
+    def show(self):
+        plt.imshow(self.data)
+        plt.suptitle(self.telescope)
+        plt.show()
 
 
 
@@ -78,6 +84,7 @@ if __name__ == '__main__':
 
     #On créé un PSF
     psf = PSF('HST')
+    #psf.show()
 
     #On créé une fake image avec 10 galaxies comme on la recevrait d'un télescope
     image_avec_10_galaxies = MockImage(randomize=True, number_of_galaxies=10, gal={'pos':(400,500), 'angle':40, 'stdev':(1,1), 'amplitude':100}, add_noise=True, noise_level=50, noise_deviation=2, psf=psf)
