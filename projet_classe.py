@@ -11,7 +11,8 @@ class PSF():
     def __init__(self, telescope='HST'):
         self.telescope = telescope
         if telescope == 'HST':
-            self.data = np.loadtxt(r'hubble_PSF.txt', dtype=int)
+            self.data = np.loadtxt(r'hst_PSF.txt', dtype=float)
+            #self.show()
         else:
             raise ValueError("There is no PSF available for this telescope.")
         
@@ -55,7 +56,7 @@ class MockImage():
             g.append(Gaussian2D(self.amplitude[i], self.pos[i][0], self.pos[i][1], self.stdev[i][0], self.stdev[i][1], theta=self.angle[i] * np.pi / 180.0))
             ran_seed = random()
             
-            self.agn[i] = Gaussian2D(point_amp[i]*self.agn[i], self.pos[i][0], self.pos[i][1], 1, 1, theta=0)
+            self.agn[i] = Gaussian2D(point_amp[i]*self.agn[i], self.pos[i][0], self.pos[i][1], 0.1, 0.1, theta=0)
         ny = nx = 1000
         y, x = np.mgrid[0:ny, 0:nx]
         noise = make_noise_image((ny, nx), distribution='gaussian', mean=noise_level, stddev=noise_deviation, seed=None)
@@ -64,10 +65,10 @@ class MockImage():
             #On ajoute les galaxies à l'image
             self.data += g[i](x,y) + self.agn[i](x,y)
         if star:
-            self.data += Gaussian2D(20, 800, 800, 0.1, 0.1, theta=0)(x,y)
+            self.data += Gaussian2D(1, 800, 800, 0.1, 0.1, theta=0)(x,y)
         #Convolve with PSF:
         if psf is not None:
-            self.data = ndimage.convolve(self.data, psf.data, mode='reflect')/3134.28857895659
+            self.data = ndimage.convolve(self.data, psf.data/np.sum(psf.data), mode='reflect')
 
         #On ajoute le bruit dans l'image
         if add_noise:

@@ -12,12 +12,12 @@ image = MockImage(
     randomize=False, 
     number_of_galaxies=1, 
     star=True, 
-    gal={'pos':(400,500), 'angle':40, 'stdev':(5,10), 'amplitude':0.3, 'agn':1}, 
-    agn_amp=2, 
+    gal={'pos':(400,500), 'angle':40, 'stdev':(5,10), 'amplitude':0.003, 'agn':1}, 
+    agn_amp=0.005, 
     psf=psf, 
     add_noise=True, 
-    noise_level=0.005, 
-    noise_deviation=0.001
+    noise_level=0.0007, 
+    noise_deviation=0.003
     )
 image.show()
 #fitsFile = pyfits.open(image)
@@ -41,8 +41,10 @@ fov_image = image.data # check the back ground
 
 
 #exp =  astro_tools.read_fits_exp(fitsFile_qso[0].header)  #Read the exposure time 
-#mean_wht = exp * (0.0642/0.135)**2  #The drizzle information is used to derive the mean WHT value.
-#exp_map = exp * wht/mean_wht  #Derive the exposure time map for each pixel
+exp = 2260.0
+wht = np.ones(image.data.shape)*exp
+mean_wht = exp * (0.0642/0.135)**2  #The drizzle information is used to derive the mean WHT value.
+exp_map = exp * wht/mean_wht  #Derive the exposure time map for each pixel
 
 
 
@@ -50,10 +52,10 @@ fov_image = image.data # check the back ground
 
 #keywords see the notes above.
 data_process = DataProcess(fov_image = fov_image, target_pos = [400,500], pos_type = 'pixel', header = None,
-                          rm_bkglight = False, exptime = 1, if_plot=False, zp = 24.897)  #zp use 27.0 for convinence.
+                          rm_bkglight = False, exptime = exp_map, if_plot=False, zp = 24.897)  #zp use 27.0 for convinence.
 
-data_process.generate_target_materials(radius=50, create_mask = False, nsigma=3,
-                                      exp_sz= 2, npixels = 15, if_plot=True)
+data_process.generate_target_materials(radius=50, create_mask = False, nsigma=5,
+                                      exp_sz= 1.2, npixels = 15, if_plot=True)
 
 data_process.find_PSF(radius = 30, PSF_pos_list=[[800, 800]], user_option = True)  #Try this line out! 
 #data_process.find_PSF(radius = 30, user_option = True)
