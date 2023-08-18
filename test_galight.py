@@ -35,7 +35,7 @@ image = MockImage(
     randomize=True, 
     number_of_galaxies=1, 
     star=True,
-    psf=None, 
+    psf=psf, 
     if_agn='all',
     add_noise=True, 
     noise_level=0.0007, 
@@ -43,10 +43,6 @@ image = MockImage(
     )
 image.show()
 #fitsFile = pyfits.open(image)
-
-
-
-
 
 
 
