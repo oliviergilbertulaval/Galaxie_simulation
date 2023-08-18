@@ -40,7 +40,7 @@ class MockImage():
         for i in range(number_of_galaxies):
             self.pos.append((random()*900+50, random()*900+50))
             self.angle.append(360*random())
-            self.amplitude.append(0.001*random()+0.0005)
+            self.amplitude.append(0.001*random()+0.0002)
             self.stdev.append((15*random()+5, 15*random()+5))
             if if_agn == 'maybe':
                 self.agn.append(1 if random()>0.5 else 0)

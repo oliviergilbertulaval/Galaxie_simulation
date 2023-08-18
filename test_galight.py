@@ -106,6 +106,8 @@ fit_sepc = FittingSpecify(data_process)
 fit_sepc.prepare_fitting_seq(point_source_num = 1, fix_n_list= None, fix_center_list = [[0, 0]], 
                             extend_source_model=None, source_params = None, ps_params = None)
 
+#For some reason (probably due to the way I generate the host galaxy using a 2D Gaussian), the Sersic index (n) is always fitted as 0.5
+
 #Plot the initial settings for fittings. 
 fit_sepc.plot_fitting_sets()
 
@@ -120,7 +122,7 @@ fit_sepc.build_fitting_seq()
 
 #Pass fit_sepc to FittingProcess,
 # savename: The name of the saved files.    
-fit_run = FittingProcess(fit_sepc, savename = 'HST_mock', fitting_level='deep') 
+fit_run = FittingProcess(fit_sepc, fitting_level='deep') 
 
 
 
@@ -147,4 +149,4 @@ fit_run.plot_all(target_ID = 'Mock_Image')
 
 #Save the fitting class as pickle format:
 #     Note, if you use python3 (or 2), load with python3 (or 2)
-fit_run.dump_result()
+#fit_run.dump_result()
