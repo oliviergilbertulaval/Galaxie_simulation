@@ -50,7 +50,6 @@ class MockImage():
                 self.agn.append(0)
             point_amp.append(random()*1+0.001)
             if randomize is False and i == 0:
-                print('randomize=False')
                 self.pos[0] = (gal['pos'])
                 self.angle[0] = (gal['angle'])
                 self.stdev[0] = (gal['stdev'])
