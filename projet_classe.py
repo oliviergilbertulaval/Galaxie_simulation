@@ -82,7 +82,15 @@ class MockImage():
 
     def show(self):
         #Affiche l'image à l'écran
-        plt.imshow(self.data, cmap='gray', origin='lower')
+        ax1 = plt.subplot(111)
+        ax1.imshow(self.data, cmap='gray', origin='lower', vmax=0.01)
+        ticklabels = ax1.get_xticklabels()
+        ticklabels.extend(ax1.get_yticklabels())
+        for label in ticklabels:
+            label.set_fontsize(14)
+        ax1.set_ylabel(r'pixel', size=16)
+        ax1.set_xlabel(r'pixel', size=16)
+        #plt.suptitle('SDSS J101152.98+544206.4, z = 0.246', size=16)
         plt.show()
         pass
 
