@@ -15,10 +15,11 @@ from photutils.isophote import (Ellipse, EllipseGeometry,
 #On créé l'image avec la classe
 # Assuming your galaxy image is already in a numpy array called galaxy_image
 image = MockImage()
-image.show()
-array = image.data
-plt.show()
+plt.imshow(image.data, cmap='gray', origin='lower')
+plt.title(' Image')
 
+plt.show()
+array = image.data
 
 
 
@@ -210,6 +211,10 @@ print(f"Center y-coordinate value of outermost isophote: {outermost_y0}")
 plt.imshow(model_image, origin='lower')
 plt.title('Model Image')
 plt.colorbar()
+plt.show()
+plt.imshow(model_image,cmap='gray', origin='lower')
+plt.title('Model Image no color')
+
 plt.show()
 fig, (ax1, ax2, ax3) = plt.subplots(figsize=(14, 5), nrows=1, ncols=3)
 fig.subplots_adjust(left=0.04, right=0.98, bottom=0.02, top=0.98)
